@@ -114,7 +114,7 @@
 <body>
 
     <div class="container">
-        <h1><marquee> Point of Sales </marquee></h1>
+        <h1><marquee> WEB K3 </marquee></h1>
         <p> Welcome to Landing Page </p>
         <a href="{{ url('login') }}" class="btn btn-login">Login</a>
         <a href="{{ url('register') }}" class="btn btn-register">Register</a>
