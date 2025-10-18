@@ -91,15 +91,14 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     });
 
     Route::group(['prefix' => 'supplier'], function () {
-        Route::middleware(['authorize:ADM,MNG'])->group(function (){
-            Route::get('/', [SupplierController::class, 'index']);       
+        Route::middleware(['authorize:ADM,MNG'])->group(function () {
+            Route::get('/', [SupplierController::class, 'index']);
         });
     });
 
     Route::group(['prefix' => 'penjualan'], function () {
-        Route::middleware(['authorize:ADM,MNG,STF'])->group(function (){
-            Route::get('/', [PenjualanController::class, 'index']);       
-
+        Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
+            Route::get('/', [PenjualanController::class, 'index']);
         });
     });
 });
