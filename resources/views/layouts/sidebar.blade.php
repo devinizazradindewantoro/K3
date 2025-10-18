@@ -55,6 +55,15 @@
         </a>
       </li>
 
+      <!-- Alat Pelindung Diri -->
+      <li class="nav-item">
+        <a href="{{ url('/apd') }}" class="nav-link {{ ($activeMenu == 'apd')? 'active' : '' }}">
+          <i class="nav-icon fas fa-shield-alt"></i>
+
+          <p>Alat Pelindung Diri</p>
+        </a>
+      </li>
+
       <!-- Materi K3 -->
       <li class="nav-item">
         <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok')? 'active' : '' }}">
@@ -62,15 +71,6 @@
           <p>Materi K3</p>
         </a>
       </li>
-
-      <!-- Logout -->
-      <li class="nav-item">
-        <a href="{{ url('/login') }}" class="nav-link text-danger {{ ($activeMenu == 'login') ? 'active' : '' }}">
-          <i class="nav-icon fas fa-sign-out-alt"></i>
-          <p>Logout</p>
-        </a>
-      </li>
-
     </ul>
   </nav>
 </div>
