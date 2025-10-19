@@ -65,6 +65,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     });
 
     // (APD route removed - APD handled via /barang or other existing pages)
+    
 
     Route::group(['prefix' => 'level'], function () {
         Route::middleware(['authorize:ADM'])->group(function () {

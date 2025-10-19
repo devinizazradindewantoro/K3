@@ -15,8 +15,8 @@ class SupplierController extends Controller
     public function index()
     {
         $breadcrumb = (object)[
-            'title' => 'Daftar Supplier',
-            'list' => ['Home', 'Supplier']
+            'title' => '',
+            'list' => ['']
         ];
 
         $page = (object)[

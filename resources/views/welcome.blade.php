@@ -11,16 +11,24 @@
     <!-- Carousel -->
     <div id="carouselK3" class="carousel slide" data-ride="carousel" data-interval="5000">
         <div class="carousel-inner rounded shadow">
+
             <div class="carousel-item active">
-                <img src="{{ asset('adminlte/dist/img/sampoerna.jpeg') }}" class="d-block w-100" alt="Foto 1">
+                <img src="{{ asset('adminlte/dist/img/background.avif') }}" class="d-block w-100 carousel-img" alt="Foto 1">
             </div>
+
             <div class="carousel-item">
-                <img src="{{ asset('adminlte/dist/img/hmsampoerna.png') }}" class="d-block w-100" alt="Foto 2">
+                <img src="{{ asset('adminlte/dist/img/background2.avif') }}" class="d-block w-100 carousel-img" alt="Foto 2">
             </div>
+
             <div class="carousel-item">
-                <img src="{{ asset('adminlte/dist/img/hmsampoerna1.png') }}" class="d-block w-100" alt="Foto 3">
+                <img src="{{ asset('adminlte/dist/img/background3.avif') }}" class="d-block w-100 carousel-img" alt="Foto 3">
+            </div>
+
+            <div class="carousel-item">
+                <img src="{{ asset('adminlte/dist/img/background4.avif') }}" class="d-block w-100 carousel-img" alt="Foto 4">
             </div>
         </div>
+
         <!-- Kontrol navigasi -->
         <a class="carousel-control-prev" href="#carouselK3" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -32,4 +40,28 @@
         </a>
     </div>
 </div>
+
+@push('styles')
+<style>
+/* Ukuran gambar carousel responsif */
+.carousel-img {
+    height: 420px; /* tinggi default (bisa disesuaikan) */
+    object-fit: cover; /* menjaga proporsi gambar tetap bagus */
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+    .carousel-img {
+        height: 250px;
+    }
+}
+
+/* Untuk layar besar */
+@media (min-width: 1200px) {
+    .carousel-img {
+        height: 450px;
+    }
+}
+</style>
+@endpush
 @endsection

@@ -1,4 +1,11 @@
 <div class="sidebar">
+  <div class="sidebar">
+    @php
+        $activeMenu = $activeMenu ?? '';
+    @endphp
+    <!-- SidebarSearch Form -->
+    ...
+
   <!-- SidebarSearch Form -->
   <div class="form-inline mt-">
     <div class="input-group" data-widget="sidebar-search">
@@ -57,7 +64,7 @@
 
       <!-- Alat Pelindung Diri -->
       <li class="nav-item">
-        <a href="{{ url('/apd') }}" class="nav-link {{ ($activeMenu == 'apd')? 'active' : '' }}">
+        <a href="{{ url('/supplier') }}" class="nav-link {{ ($activeMenu == 'supplier')? 'active' : '' }}">
           <i class="nav-icon fas fa-shield-alt"></i>
 
           <p>Alat Pelindung Diri</p>

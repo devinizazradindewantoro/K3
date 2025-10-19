@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
     <!-- Custom Style -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
+    
     @stack('css')
     @stack('styles')
 
@@ -86,7 +86,7 @@
     }
 
     .main-sidebar .nav-sidebar .nav-link {
-        font-size: 16px !important;
+        font-size: 13px !important;
         font-weight: 500 !important;
         color: #e0e0e0 !important;
         padding: 10px 15px !important;
@@ -188,6 +188,8 @@
             height: 200px;
         }
     }
+
+    
 </style>
 
 <body class="hold-transition sidebar-mini layout-fixed">

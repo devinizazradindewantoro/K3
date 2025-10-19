@@ -122,7 +122,7 @@
 
     <div class="footer">
         <p>&copy; 2025 <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
-        <p> DEVIN I'ZAZ RADIN DEWANTORO | SIB 2A / 10</p>
+        <p></p>
     </div>
 
     <!-- Slider Section (moved below footer) -->
