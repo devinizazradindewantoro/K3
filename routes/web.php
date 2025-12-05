@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\Smk3Controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -100,6 +101,12 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     Route::group(['prefix' => 'penjualan'], function () {
         Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
             Route::get('/', [PenjualanController::class, 'index']);
+        });
+    });
+
+     Route::group(['prefix' => 'penjualan'], function () {
+        Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
+            Route::get('/', [Smk3Controller::class, 'index']);
         });
     });
 });

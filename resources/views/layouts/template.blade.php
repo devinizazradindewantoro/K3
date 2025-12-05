@@ -67,8 +67,8 @@
     .main-sidebar .brand-link .brand-image {
         width: 60px !important;
         height: 60px !important;
-        object-fit: contain !important;
-        border-radius: 50% !important;
+        object-fit: cover !important;
+        border-radius: 0% !important;
         margin-bottom: 5px !important;
     }
 
@@ -199,7 +199,7 @@
         @include('layouts.header')
 
         <!-- Sidebar -->
-        <aside class="main-sidebar sidebar-dark-success elevation-4">
+        <aside class="main-sidebar sidebar-dark-success elevation-5">
             <a href="{{ url('/') }}" class="brand-link text-center">
                 <img src="{{ asset('adminlte/dist/img/hmsampoerna1.png') }}"
                     alt="Logo"

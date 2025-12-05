@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="card card-outline card-primary">
+<div class="card card-outline card-danger">
 
     {{-- Banner Gambar di Atas --}}
     <div class="breadcrumb-banner position-relative mb-3">

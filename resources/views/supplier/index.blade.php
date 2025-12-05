@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="card card-outline card-primary">
+<div class="card card-outline card-danger">
     <div class="card-header">
         <h3 class="card-title">Alat Pelindung Diri (APD) - PT HM Sampoerna Tbk</h3>
     </div>

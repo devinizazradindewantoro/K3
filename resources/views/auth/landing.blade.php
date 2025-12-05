@@ -4,152 +4,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Point of Sales</title>
+    <title>Point of Sales | K3 PT HM Sampoerna Tbk</title>
     <!-- Google Font: Poppins -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Slick Slider CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
+        /* ===== Global Reset ===== */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #01153E;
-            color: #3C3C3B;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #7A0000 0%, #B30000 100%);
+            color: #FAF3E0;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            text-align: center;
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: overlay;
-            
             overflow: hidden;
-            flex-direction: column;
         }
 
-        h1 {
-            font-size: 56px;
+        /* ===== Hero Section ===== */
+        .hero {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 60px 40px;
+            max-width: 700px;
+            animation: fadeIn 1s ease-out forwards;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 700;
             margin-bottom: 10px;
             color: #FAF3E0;
+            letter-spacing: 1px;
         }
 
-        p {
-            font-size: 20px;
+        .hero h1 span {
+            color: #FFD369;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #E8E6E3;
             margin-bottom: 40px;
-            color: #857575;
         }
 
+        /* ===== Buttons ===== */
         .btn {
             display: inline-block;
-            padding: 15px 30px;
-            font-size: 18px;
-            background-color: #FAF3E0;
-            color: #563C5C;
-            border: none;
-            border-radius: 5px;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
-            margin: 0 10px;
             text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
+            margin: 0 10px;
         }
 
-        .btn:hover {
-            background-color: #8C7297;
-            transform: translateY(-5px);
+        .btn-primary {
+            background-color: #FFD369;
+            color: #4A0000;
         }
 
-        .btn-login {
-            background-color: #01153E;
-            border: 2px solid #FAF3E0;
-            color: #FAF3E0;
+        .btn-primary:hover {
+            background-color: #FFC233;
+            transform: translateY(-4px);
         }
 
-        .btn-login:hover {
-            background-color: #1E3A5F;
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #FFD369;
+            color: #FFD369;
         }
 
-        .btn-register {
-            background-color: #FAF3E0;
+        .btn-outline:hover {
+            background: #FFD369;
+            color: #4A0000;
+            transform: translateY(-4px);
         }
 
-        .container {
-            max-width: 700px;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .footer {
-            width: 100%;
+        /* ===== Footer ===== */
+        footer {
+            position: absolute;
+            bottom: 20px;
             text-align: center;
             font-size: 14px;
-            margin-bottom: 20px;
+            color: #E8E6E3;
         }
 
-        .footer a {
-            color: #FAF3E0;
+        footer a {
+            color: #FFD369;
             text-decoration: none;
+            margin: 0 5px;
         }
 
-        .footer a:hover {
+        footer a:hover {
             text-decoration: underline;
         }
 
-        .slider {
-            width: 20%;
-            margin: 20px auto;
+        /* ===== Animation ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .slick-slide img {
-            width: 100%;
-            border-radius: 10px;
+        /* ===== Decorative Circles ===== */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.07);
+            z-index: 0;
+        }
+
+        .circle.one {
+            width: 180px;
+            height: 180px;
+            top: 10%;
+            left: 10%;
+        }
+
+        .circle.two {
+            width: 250px;
+            height: 250px;
+            bottom: 15%;
+            right: 12%;
         }
     </style>
 </head>
 
 <body>
+    <!-- Decorative Background Elements -->
+    <div class="circle one"></div>
+    <div class="circle two"></div>
 
-    <div class="container">
-        <h1><marquee> WEB K3 </marquee></h1>
-        <p> Welcome to Landing Page </p>
-        <a href="{{ url('login') }}" class="btn btn-login">Login</a>
-        <a href="{{ url('register') }}" class="btn btn-register">Register</a>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1><span>WEB</span> K3</h1>
+        <p>Selamat datang di sistem Kesehatan dan Keselamatan Kerja <br> <b>PT HM Sampoerna Tbk</b>.</p>
+        <a href="{{ url('level') }}" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket"></i> Dashboard</a>
+        <a href="#" class="btn btn-outline"><i class="fa-solid fa-circle-info"></i> Tentang Kami</a>
     </div>
 
-    <div class="footer">
-        <p>&copy; 2025 <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
-        <p></p>
-    </div>
-
-    <!-- Slider Section (moved below footer) -->
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Slick Slider JS -->
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Slider Initialization
-            $('.slider').slick({
-                autoplay: true,
-                autoplaySpeed: 2000,
-                dots: true,
-                arrows: true,
-                fade: true,
-                cssEase: 'linear'
-            });
-
-            // Animate the container on page load
-            $(".container").animate({
-                opacity: 1,
-                transform: "translateY(0)"
-            }, 800);
-        });
-    </script>
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 PT HM Sampoerna Tbk | <a href="#">Kebijakan Privasi</a> • <a href="#">Syarat & Ketentuan</a>
+    </footer>
 </body>
 
 </html>

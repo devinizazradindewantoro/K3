@@ -1,11 +1,10 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="card card-outline card-primary">
+<div class="card card-outline card-danger">
     <div class="card-header">
         <h3 class="card-title">
-            <!-- <i class="fas fa-exclamation-triangle text-warning"></i>  -->
-            Sikap dan Tindakan Saat Mengetahui Situasi Darurat
+            Materi K3 (Keselamatan dan Kesehatan Kerja) - PT HM Sampoerna Tbk
         </h3>
     </div>
 
@@ -13,51 +12,32 @@
         <div class="row">
             
             {{-- Kolom kiri: teks materi --}}
-            <div class="col-md-6">
-                <p style="text-align: justify;">
-                    Dalam menghadapi situasi darurat, setiap karyawan diharapkan memiliki kesiapsiagaan dan ketenangan agar dapat mengambil langkah yang tepat sesuai prosedur perusahaan.
-                </p>
+            <div class="col-md-6"> 
 
-                <h5 class="mt-3 fw-semibold text-primary">
-                    <i class="fas fa-user-shield"></i> Sikap dan Tindakan Saat Mengetahui Situasi Darurat
-                </h5>
-                <ul style="text-align: justify;">
-                    <li><b>Tetap Tenang:</b> Hindari berteriak agar tidak menimbulkan kepanikan.</li>
-                    <li><b>Tanggap:</b> Bertindak cepat untuk menyelesaikan masalah.</li>
-                    <li><b>Bertanggung Jawab:</b> Menyelesaikan masalah sesuai prosedur yang berlaku di perusahaan.</li>
-                </ul>
+                <div style="text-align: justify;">
+                    <p><b>1. Simulasi Kebakaran - K3:</b>  
+                    Menjelaskan langkah-langkah menghadapi kebakaran di tempat kerja. Karyawan diajarkan untuk mengenali sumber api, tetap tenang, menggunakan APAR dengan benar, dan mengikuti jalur evakuasi yang aman.</p>
 
-                <h5 class="mt-4 fw-semibold text-primary">
-                    <i class="fas fa-fire-extinguisher text-danger"></i> Tindakan Dalam Menghadapi Situasi Darurat
-                </h5>
-                <ul style="text-align: justify;">
-                    <li><b>Ikuti Prosedur:</b> Lakukan tindakan sesuai prosedur darurat perusahaan.</li>
-                    <li><b>Patuhi Tanda Bahaya:</b> Patuhi semua tanda peringatan atau instruksi dari sistem alarm.</li>
-                    <li><b>Operasikan Peralatan Darurat:</b> Gunakan pemadam kebakaran atau alat keselamatan lain bila perlu.</li>
-                    <li><b>Cari Bantuan:</b> Segera cari bantuan dari rekan kerja atau pihak berwenang.</li>
-                    <li><b>Laporkan Insiden:</b> Laporkan kejadian kepada atasan atau pihak yang bertanggung jawab.</li>
-                </ul>
+                    <p><b>2. Prosedur Evakuasi Darurat:</b>  
+                    Menampilkan prosedur evakuasi saat alarm darurat berbunyi. Materi ini menekankan pentingnya ketertiban, kecepatan, dan keselamatan menuju titik kumpul tanpa menimbulkan kepanikan.</p>
 
-                <h5 class="mt-4 fw-semibold text-primary">
-                    <i class="fas fa-fire text-danger"></i> Skenario Darurat Tertentu
-                </h5>
-                <ul style="text-align: justify;">
-                    <li><b>Kebakaran:</b> Hindari bahaya asap dan panas, gunakan APD jika memungkinkan.</li>
-                    <li><b>Pelanggan Terganggu Mental:</b> Segera bawa ke ruang kesehatan atau laporkan ke petugas medis.</li>
-                </ul>
+                    <p><b>3. Penggunaan APAR dengan Benar:</b>  
+                    Memberikan panduan dalam menggunakan Alat Pemadam Api Ringan (APAR) menggunakan metode PASS (Pull, Aim, Squeeze, Sweep). Tujuannya agar karyawan dapat memadamkan api kecil secara aman dan efektif.</p>
+
+                    <p><b>4. Tanggap Bencana Gempa:</b>  
+                    Mengajarkan tindakan yang harus dilakukan ketika terjadi gempa bumi di area kerja, seperti berlindung di bawah meja yang kuat, menjauhi jendela, serta menuju area aman sesuai jalur evakuasi.</p>
+                </div>
             </div>
 
             {{-- Kolom kanan: video --}}
             <div class="col-md-6">
-                <h5 class="fw-semibold mb-3 text-center text-primary">
-                    <i class="fab fa-youtube text-danger"></i> Video Materi K3
-                </h5>
+                
 
                 <div class="video-list">
                     {{-- Video 1 --}}
                     <div class="card mb-3 shadow-sm video-card">
                         <div class="ratio ratio-16x9 rounded-top overflow-hidden">
-                            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" 
+                            <iframe src="https://www.youtube.com/embed/OGHycJ76OQg?si=lkv7fopkAzeYVRyE"
                                     title="Simulasi Kebakaran - K3" 
                                     allowfullscreen></iframe>
                         </div>
@@ -69,7 +49,7 @@
                     {{-- Video 2 --}}
                     <div class="card mb-3 shadow-sm video-card">
                         <div class="ratio ratio-16x9 rounded-top overflow-hidden">
-                            <iframe src="https://www.youtube.com/embed/ysz5S6PUM-U" 
+                            <iframe src="https://www.youtube.com/embed/vGogkOOh5KQ?si=w7liaVgACZmnkqZr" 
                                     title="Prosedur Evakuasi Darurat" 
                                     allowfullscreen></iframe>
                         </div>
@@ -81,7 +61,7 @@
                     {{-- Video 3 --}}
                     <div class="card mb-3 shadow-sm video-card">
                         <div class="ratio ratio-16x9 rounded-top overflow-hidden">
-                            <iframe src="https://www.youtube.com/embed/aqz-KE-bpKQ" 
+                            <iframe src="https://www.youtube.com/embed/qS1IfnVLNJ8?si=kznPs_mdRuujufOg" 
                                     title="Penggunaan APAR dengan Benar" 
                                     allowfullscreen></iframe>
                         </div>
@@ -93,7 +73,7 @@
                     {{-- Video 4 --}}
                     <div class="card mb-3 shadow-sm video-card">
                         <div class="ratio ratio-16x9 rounded-top overflow-hidden">
-                            <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" 
+                            <iframe src="https://www.youtube.com/embed/dUBzPCNXy6U?si=x8iMVsizf9NsupzQ"
                                     title="Tanggap Bencana Gempa" 
                                     allowfullscreen></iframe>
                         </div>

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-class PenjualanController extends Controller
+class Smk3Controller extends Controller
 {
     public function index()
     {

@@ -73,11 +73,35 @@
 
       <!-- Materi K3 -->
       <li class="nav-item">
+        <a href="{{ url('/penjualan') }}" class="nav-link {{ ($activeMenu == 'penjualan')? 'active' : '' }}">
+          <i class="nav-icon fas fa-first-aid"></i>
+          <p>P3K</p>
+        </a>
+      </li>
+      <!-- Materi K3 -->
+      <li class="nav-item">
         <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok')? 'active' : '' }}">
           <i class="nav-icon fas fa-book-open"></i>
           <p>Materi K3</p>
         </a>
       </li>
+
+      <!-- SMK 3 -->
+      <li class="nav-item">
+        <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok')? 'active' : '' }}">
+          <i class="nav-icon fas fa-book-open"></i>
+          <p>SMK 3</p>
+        </a>
+      </li>
+
+       <!-- AUDIT K3 -->
+      <li class="nav-item">
+        <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok')? 'active' : '' }}">
+          <i class="nav-icon fas fa-book-open"></i>
+          <p>AUDIT K3</p>
+        </a>
+      </li>
+
     </ul>
   </nav>
 </div>
