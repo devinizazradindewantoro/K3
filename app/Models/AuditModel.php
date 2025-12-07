@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class LevelModel extends Model
+class AuditModel extends Model
 {
     protected $table = 'm_level';
     protected $primaryKey = 'level_id';

@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LevelModel;
-use App\Models\UserModel;
+use App\Models\AuditModel;
+use App\Models\InformasiModel;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class LevelController extends Controller
+class AuditController extends Controller
 {
-    // Menampilkan halaman awal level user
+    // Menampilkan halaman awal Audit user
     public function index()
     {
         $breadcrumb = (object) [
@@ -22,145 +22,145 @@ class LevelController extends Controller
         ];
 
         $page = (object) [
-            'title' => 'Daftar level user yang terdaftar dalam sistem'
+            'title' => 'Daftar Audit user yang terdaftar dalam sistem'
         ];
 
-        $activeMenu = 'level'; // set menu yang sedang aktif
+        $activeMenu = 'Audit'; // set menu yang sedang aktif
 
-        return view('level.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        return view('Audit.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
     }
 
-    // Ambil data level user dalam bentuk json untuk datatables public function list(Request $request)
+    // Ambil data Audit user dalam bentuk json untuk datatables public function list(Request $request)
     public function list(Request $request)
     {
-        $level = LevelModel::select('level_id', 'level_kode', 'level_nama');
+        $Audit = AuditModel::select('Audit_id', 'Audit_kode', 'Audit_nama');
 
-        // filter data user berdasarkan level_id
-        if ($request->level_id) {
-            $level->where('level_id', $request->level_id);
+        // filter data user berdasarkan Audit_id
+        if ($request->Audit_id) {
+            $Audit->where('Audit_id', $request->Audit_id);
         };
 
 
-        return DataTables::of($level)
+        return DataTables::of($Audit)
             // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
             ->addIndexColumn()
-            ->addColumn('aksi', function ($level) { // menambahkan kolom aksi
-                // $btn = '<a href="'.url('/level/' . $level->level_id).'" class="btn btn-info btn-sm">Detail</a> ';
-                // $btn .= '<a href="'.url('/level/' . $level->level_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
-                // $btn .= '<form class="d-inline-block" method="POST" action="'. url('/level/'.$level->level_id).'">'
+            ->addColumn('aksi', function ($Audit) { // menambahkan kolom aksi
+                // $btn = '<a href="'.url('/Audit/' . $Audit->Audit_id).'" class="btn btn-info btn-sm">Detail</a> ';
+                // $btn .= '<a href="'.url('/Audit/' . $Audit->Audit_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
+                // $btn .= '<form class="d-inline-block" method="POST" action="'. url('/Audit/'.$Audit->Audit_id).'">'
                 // . csrf_field() . method_field('DELETE') .
                 // '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
                 //  return $btn;
 
-                $btn = '<button onclick="modalAction(\'' . url('/level/' . $level->level_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/level/' . $level->level_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/level/' . $level->level_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+                $btn = '<button onclick="modalAction(\'' . url('/Audit/' . $Audit->Audit_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/Audit/' . $Audit->Audit_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/Audit/' . $Audit->Audit_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
             })
             ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
             ->make(true);
     }
 
-    // Menampilkan halaman form tambah level user
+    // Menampilkan halaman form tambah Audit user
     public function create()
     {
         $breadcrumb = (object) [
-            'title' => 'Tambah Level User',
-            'list' => ['Home', 'Level', 'Tambah']
+            'title' => 'Tambah Audit User',
+            'list' => ['Home', 'Audit', 'Tambah']
         ];
 
         $page = (object) [
-            'title' => 'Tambah level user baru'
+            'title' => 'Tambah Audit user baru'
         ];
 
-        $level = LevelModel::all();
-        $activeMenu = 'level'; // set menu yang sedang aktif
+        $Audit = AuditModel::all();
+        $activeMenu = 'Audit'; // set menu yang sedang aktif
 
-        return view('level.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('Audit.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'Audit' => $Audit, 'activeMenu' => $activeMenu]);
     }
 
-    // Menyimpan data level user baru
+    // Menyimpan data Audit user baru
     public function store(Request $request)
     {
         $request->validate([
-            // username harus diisi, berupa string, minimal 3 karakter, dan bernilai unik di tabel m_level kolom level_kode dan level_nama
-            'level_kode' => 'required|string|unique:m_level,level_kode',
-            'level_nama' => 'required|string'
+            // username harus diisi, berupa string, minimal 3 karakter, dan bernilai unik di tabel m_Audit kolom Audit_kode dan Audit_nama
+            'Audit_kode' => 'required|string|unique:m_Audit,Audit_kode',
+            'Audit_nama' => 'required|string'
         ]);
 
-        LevelModel::create([
-            'level_kode' => $request->level_kode,
-            'level_name' => $request->level_name
+        AuditModel::create([
+            'Audit_kode' => $request->Audit_kode,
+            'Audit_name' => $request->Audit_name
         ]);
 
-        return redirect('/level')->with('success', 'Data Level berhasil disimpan');
+        return redirect('/Audit')->with('success', 'Data Audit berhasil disimpan');
     }
 
 
-    // Menampilkan detail level user
+    // Menampilkan detail Audit user
 
     public function show(string $id)
     {
-        $level = LevelModel::find($id);
+        $Audit = AuditModel::find($id);
 
         $breadcrumb = (object) [
-            'title' => 'Detail Level',
-            'list' => ['Home', 'Level', 'Detail']
+            'title' => 'Detail Audit',
+            'list' => ['Home', 'Audit', 'Detail']
         ];
 
         $page = (object) [
-            'title' => 'Detail Level'
+            'title' => 'Detail Audit'
         ];
 
-        $activeMenu = 'level'; // set menu yang sedang aktif
+        $activeMenu = 'Audit'; // set menu yang sedang aktif
 
-        return view('level.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('Audit.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'Audit' => $Audit, 'activeMenu' => $activeMenu]);
     }
 
-    // Menampilkan halaman form edit level user
+    // Menampilkan halaman form edit Audit user
 
     public function edit(string $id)
     {
-        $user = UserModel::find($id);
-        $level = LevelModel::all();
+        $Audit = AuditModel::find($id);
+        $allAudit = AuditModel::all();
 
         $breadcrumb = (object) [
-            'title' => 'Edit Level',
-            'list' => ['Home', 'Level', 'Edit']
+            'title' => 'Edit Audit',
+            'list' => ['Home', 'Audit', 'Edit']
         ];
 
         $page = (object) [
-            'title' => 'Edit level'
+            'title' => 'Edit Audit'
         ];
 
-        $activeMenu = 'level'; // set menu yang sedang aktif
+        $activeMenu = 'Audit'; // set menu yang sedang aktif
 
-        return view('level.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('Audit.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'Audit' => $Audit, 'allAudit' => $allAudit, 'activeMenu' => $activeMenu]);
     }
 
 
-    // Menyimpan perubahan data level user
+    // Menyimpan perubahan data Audit user
 
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'level_kode' => 'required|string|unique:m_level,level_kode,' . $id . ',level_id',
-            'level_name' => 'required|string'
+            'Audit_kode' => 'required|string|unique:m_Audit,Audit_kode,' . $id . ',Audit_id',
+            'Audit_name' => 'required|string'
         ]);
 
-        $level = LevelModel::findOrFail($id);
-        $level->update([
+        $Audit = AuditModel::findOrFail($id);
+        $Audit->update([
 
-            'level_kode' => $request->level_kode,
-            'level_name' => $request->level_name
+            'Audit_kode' => $request->Audit_kode,
+            'Audit_name' => $request->Audit_name
         ]);
 
-        return redirect('/level')->with('success', 'Data Level berhasil diperbarui');
+        return redirect('/Audit')->with('success', 'Data Audit berhasil diperbarui');
     }
 
     public function create_ajax()
     {
-        return view('level.create_ajax');
+        return view('Audit.create_ajax');
     }
 
     public function store_ajax(Request $request)
@@ -168,8 +168,8 @@ class LevelController extends Controller
         // Cek apakah request berupa AJAX
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'level_kode' => 'required|string|min:3|max:20|unique:m_level,level_kode',
-                'level_nama' => 'required|string|max:100',
+                'Audit_kode' => 'required|string|min:3|max:20|unique:m_Audit,Audit_kode',
+                'Audit_nama' => 'required|string|max:100',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -182,10 +182,10 @@ class LevelController extends Controller
                 ]);
             }
 
-            LevelModel::create($request->all());
+            AuditModel::create($request->all());
             return response()->json([
                 'status' => true,
-                'message' => 'Data level berhasil disimpan'
+                'message' => 'Data Audit berhasil disimpan'
             ]);
         }
 
@@ -194,17 +194,17 @@ class LevelController extends Controller
 
     public function edit_ajax(string $id)
     {
-        $level = LevelModel::find($id);
+        $Audit = AuditModel::find($id);
 
-        return view('level.edit_ajax', ['level' => $level]);
+        return view('Audit.edit_ajax', ['Audit' => $Audit]);
     }
 
     public function update_ajax(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'level_kode' => 'required|string|min:3|max:20|unique:m_level,level_kode,' . $id . ',level_id',
-                'level_nama' => 'required|string|max:100',
+                'Audit_kode' => 'required|string|min:3|max:20|unique:m_Audit,Audit_kode,' . $id . ',Audit_id',
+                'Audit_nama' => 'required|string|max:100',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -217,12 +217,12 @@ class LevelController extends Controller
                 ]);
             }
 
-            $check = LevelModel::find($id);
+            $check = AuditModel::find($id);
             if ($check) {
                 $check->update($request->all());
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data level berhasil diupdate'
+                    'message' => 'Data Audit berhasil diupdate'
                 ]);
             } else {
                 return response()->json([
@@ -236,20 +236,20 @@ class LevelController extends Controller
 
     public function confirm_ajax(string $id)
     {
-        $level = LevelModel::find($id);
+        $Audit = AuditModel::find($id);
 
-        return view('level.confirm_ajax', ['level' => $level]);
+        return view('Audit.confirm_ajax', ['Audit' => $Audit]);
     }
 
     public function delete_ajax(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
-            $level = LevelModel::find($id);
-            if ($level) {
-                $level->delete();
+            $Audit = AuditModel::find($id);
+            if ($Audit) {
+                $Audit->delete();
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data level berhasil dihapus'
+                    'message' => 'Data Audit berhasil dihapus'
                 ]);
             } else {
                 return response()->json([
@@ -261,34 +261,34 @@ class LevelController extends Controller
         return redirect('/');
     }
 
-    // Menghapus data level user
+    // Menghapus data Audit user
     public function destroy(string $id)
     {
-        $level = LevelModel::find($id);
-        if (!$level) { // untuk mengecek apakah data level user dengan id yang dimaksud ada atau tidak
-            return redirect('/level')->with('error', 'Data level tidak ditemukan');
+        $Audit = AuditModel::find($id);
+        if (!$Audit) { // untuk mengecek apakah data Audit user dengan id yang dimaksud ada atau tidak
+            return redirect('/Audit')->with('error', 'Data Audit tidak ditemukan');
         }
 
         try {
-            LevelModel::destroy($id); // Hapus data level user
-            return redirect('/level')->with('success', 'Data user berhasil dihapus');
+            AuditModel::destroy($id); // Hapus data Audit user
+            return redirect('/Audit')->with('success', 'Data user berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
 
             // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
-            return redirect('/level')->with('error', 'Data Level gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
+            return redirect('/Audit')->with('error', 'Data Audit gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
     }
 
     public function import()
     {
-        return view('level.import');
+        return view('Audit.import');
     }
 
     public function import_ajax(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'file_level' => ['required', 'mimes:xlsx', 'max:1024']
+                'file_Audit' => ['required', 'mimes:xlsx', 'max:1024']
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -300,7 +300,7 @@ class LevelController extends Controller
                 ]);
             }
 
-            $file = $request->file('file_level');
+            $file = $request->file('file_Audit');
 
             $reader = IOFactory::createReader('Xlsx');
             $reader->setReadDataOnly(true);
@@ -313,20 +313,20 @@ class LevelController extends Controller
                 foreach ($data as $baris => $value) {
                     if ($baris > 1) {
                         $insert[] = [
-                            'level_kode' => $value['A'],
-                            'level_nama' => $value['B'],
+                            'Audit_kode' => $value['A'],
+                            'Audit_nama' => $value['B'],
                             'created_at' => now(),
                         ];
                     }
                 }
 
                 if (count($insert) > 0) {
-                    LevelModel::insertOrIgnore($insert);
+                    AuditModel::insertOrIgnore($insert);
                 }
 
                 return response()->json([
                     'status'  => true,
-                    'message' => 'Data level berhasil diimport'
+                    'message' => 'Data Audit berhasil diimport'
                 ]);
             } else {
                 return response()->json([
@@ -340,25 +340,25 @@ class LevelController extends Controller
 
     public function export_excel()
     {
-        $level = LevelModel::select('level_kode', 'level_nama')
-            ->orderBy('level_kode')
+        $Audit = AuditModel::select('Audit_kode', 'Audit_nama')
+            ->orderBy('Audit_kode')
             ->get();
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         $sheet->setCellValue('A1', 'No');
-        $sheet->setCellValue('B1', 'Kode Level');
-        $sheet->setCellValue('C1', 'Nama Level');
+        $sheet->setCellValue('B1', 'Kode Audit');
+        $sheet->setCellValue('C1', 'Nama Audit');
 
         $sheet->getStyle('A1:C1')->getFont()->setBold(true);
 
         $no = 1;
         $baris = 2;
-        foreach ($level as $key => $value) {
+        foreach ($Audit as $key => $value) {
             $sheet->setCellValue('A' . $baris, $no);
-            $sheet->setCellValue('B' . $baris, $value->level_kode);
-            $sheet->setCellValue('C' . $baris, $value->level_nama);
+            $sheet->setCellValue('B' . $baris, $value->Audit_kode);
+            $sheet->setCellValue('C' . $baris, $value->Audit_nama);
             $baris++;
             $no++;
         }
@@ -367,10 +367,10 @@ class LevelController extends Controller
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
-        $sheet->setTitle('Data Level');
+        $sheet->setTitle('Data Audit');
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $filename = 'Data Level ' . date('Y-m-d H:i:s') . '.xlsx';
+        $filename = 'Data Audit ' . date('Y-m-d H:i:s') . '.xlsx';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
@@ -387,16 +387,16 @@ class LevelController extends Controller
 
     public function export_pdf()
     {
-        $level = LevelModel::select('level_kode', 'level_nama')
-            ->orderBy('level_kode')
+        $Audit = AuditModel::select('Audit_kode', 'Audit_nama')
+            ->orderBy('Audit_kode')
             ->get();
 
         // use Barryvdh\DomPDF\Facade\Pdf;
-        $pdf = Pdf::loadView('level.export_pdf', ['level' => $level]);
+        $pdf = Pdf::loadView('Audit.export_pdf', ['Audit' => $Audit]);
         $pdf->setPaper('a4', 'portrait');
         $pdf->setOption("isRemoteEnabled", true);
         $pdf->render();
 
-        return $pdf->stream('Data Level ' . date('Y-m-d H:i:s') . '.pdf');
+        return $pdf->stream('Data Audit ' . date('Y-m-d H:i:s') . '.pdf');
     }
 }

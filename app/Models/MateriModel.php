@@ -6,21 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class BarangModel extends Model
+class MateriModel extends Model
 {
     use HasFactory;
 
     protected $table = 'm_barang';
     protected $primaryKey = 'barang_id';
-    protected $fillable = ['kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual'];
+    protected $fillable = ['Kebijakan_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual'];
 
-    public function kategori()
+    public function Kebijakan()
     {
-        return $this->belongsTo(KategoriModel::class, 'kategori_id', 'kategori_id');
+        return $this->belongsTo(KebijakanModel::class, 'Kebijakan_id', 'Kebijakan_id');
     }
 
     public function stok()
     {
-        return $this->hasOne(StokModel::class, 'barang_id', 'barang_id');
+        return $this->hasOne(ProsedurModel::class, 'barang_id', 'barang_id');
     }
 }

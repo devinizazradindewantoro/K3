@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SMK3Model;
+use App\Models\MateriModel;
 use App\Models\InformasiModel;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class SMK3Controller extends Controller
+class MateriController extends Controller
 {
-    // Menampilkan halaman awal SMK3 user
+    // Menampilkan halaman awal Materi user
     public function index()
     {
         $breadcrumb = (object) [
@@ -22,145 +22,145 @@ class SMK3Controller extends Controller
         ];
 
         $page = (object) [
-            'title' => 'Daftar SMK3 user yang terdaftar dalam sistem'
+            'title' => 'Daftar Materi user yang terdaftar dalam sistem'
         ];
 
-        $activeMenu = 'SMK3'; // set menu yang sedang aktif
+        $activeMenu = 'Materi'; // set menu yang sedang aktif
 
-        return view('SMK3.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        return view('Materi.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
     }
 
-    // Ambil data SMK3 user dalam bentuk json untuk datatables public function list(Request $request)
+    // Ambil data Materi user dalam bentuk json untuk datatables public function list(Request $request)
     public function list(Request $request)
     {
-        $SMK3 = SMK3Model::select('SMK3_id', 'SMK3_kode', 'SMK3_nama');
+        $Materi = MateriModel::select('Materi_id', 'Materi_kode', 'Materi_nama');
 
-        // filter data user berdasarkan SMK3_id
-        if ($request->SMK3_id) {
-            $SMK3->where('SMK3_id', $request->SMK3_id);
+        // filter data user berdasarkan Materi_id
+        if ($request->Materi_id) {
+            $Materi->where('Materi_id', $request->Materi_id);
         };
 
 
-        return DataTables::of($SMK3)
+        return DataTables::of($Materi)
             // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
             ->addIndexColumn()
-            ->addColumn('aksi', function ($SMK3) { // menambahkan kolom aksi
-                // $btn = '<a href="'.url('/SMK3/' . $SMK3->SMK3_id).'" class="btn btn-info btn-sm">Detail</a> ';
-                // $btn .= '<a href="'.url('/SMK3/' . $SMK3->SMK3_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
-                // $btn .= '<form class="d-inline-block" method="POST" action="'. url('/SMK3/'.$SMK3->SMK3_id).'">'
+            ->addColumn('aksi', function ($Materi) { // menambahkan kolom aksi
+                // $btn = '<a href="'.url('/Materi/' . $Materi->Materi_id).'" class="btn btn-info btn-sm">Detail</a> ';
+                // $btn .= '<a href="'.url('/Materi/' . $Materi->Materi_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
+                // $btn .= '<form class="d-inline-block" method="POST" action="'. url('/Materi/'.$Materi->Materi_id).'">'
                 // . csrf_field() . method_field('DELETE') .
                 // '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
                 //  return $btn;
 
-                $btn = '<button onclick="modalAction(\'' . url('/SMK3/' . $SMK3->SMK3_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/SMK3/' . $SMK3->SMK3_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/SMK3/' . $SMK3->SMK3_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+                $btn = '<button onclick="modalAction(\'' . url('/Materi/' . $Materi->Materi_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/Materi/' . $Materi->Materi_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/Materi/' . $Materi->Materi_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
             })
             ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
             ->make(true);
     }
 
-    // Menampilkan halaman form tambah SMK3 user
+    // Menampilkan halaman form tambah Materi user
     public function create()
     {
         $breadcrumb = (object) [
-            'title' => 'Tambah SMK3 User',
-            'list' => ['Home', 'SMK3', 'Tambah']
+            'title' => 'Tambah Materi User',
+            'list' => ['Home', 'Materi', 'Tambah']
         ];
 
         $page = (object) [
-            'title' => 'Tambah SMK3 user baru'
+            'title' => 'Tambah Materi user baru'
         ];
 
-        $SMK3 = SMK3Model::all();
-        $activeMenu = 'SMK3'; // set menu yang sedang aktif
+        $Materi = MateriModel::all();
+        $activeMenu = 'Materi'; // set menu yang sedang aktif
 
-        return view('SMK3.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'SMK3' => $SMK3, 'activeMenu' => $activeMenu]);
+        return view('Materi.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'Materi' => $Materi, 'activeMenu' => $activeMenu]);
     }
 
-    // Menyimpan data SMK3 user baru
+    // Menyimpan data Materi user baru
     public function store(Request $request)
     {
         $request->validate([
-            // username harus diisi, berupa string, minimal 3 karakter, dan bernilai unik di tabel m_SMK3 kolom SMK3_kode dan SMK3_nama
-            'SMK3_kode' => 'required|string|unique:m_SMK3,SMK3_kode',
-            'SMK3_nama' => 'required|string'
+            // username harus diisi, berupa string, minimal 3 karakter, dan bernilai unik di tabel m_Materi kolom Materi_kode dan Materi_nama
+            'Materi_kode' => 'required|string|unique:m_Materi,Materi_kode',
+            'Materi_nama' => 'required|string'
         ]);
 
-        SMK3Model::create([
-            'SMK3_kode' => $request->SMK3_kode,
-            'SMK3_name' => $request->SMK3_name
+        MateriModel::create([
+            'Materi_kode' => $request->Materi_kode,
+            'Materi_name' => $request->Materi_name
         ]);
 
-        return redirect('/SMK3')->with('success', 'Data SMK3 berhasil disimpan');
+        return redirect('/Materi')->with('success', 'Data Materi berhasil disimpan');
     }
 
 
-    // Menampilkan detail SMK3 user
+    // Menampilkan detail Materi user
 
     public function show(string $id)
     {
-        $SMK3 = SMK3Model::find($id);
+        $Materi = MateriModel::find($id);
 
         $breadcrumb = (object) [
-            'title' => 'Detail SMK3',
-            'list' => ['Home', 'SMK3', 'Detail']
+            'title' => 'Detail Materi',
+            'list' => ['Home', 'Materi', 'Detail']
         ];
 
         $page = (object) [
-            'title' => 'Detail SMK3'
+            'title' => 'Detail Materi'
         ];
 
-        $activeMenu = 'SMK3'; // set menu yang sedang aktif
+        $activeMenu = 'Materi'; // set menu yang sedang aktif
 
-        return view('SMK3.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'SMK3' => $SMK3, 'activeMenu' => $activeMenu]);
+        return view('Materi.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'Materi' => $Materi, 'activeMenu' => $activeMenu]);
     }
 
-    // Menampilkan halaman form edit SMK3 user
+    // Menampilkan halaman form edit Materi user
 
     public function edit(string $id)
     {
-        $SMK3 = SMK3Model::find($id);
-        $allSMK3 = SMK3Model::all();
+        $Materi = MateriModel::find($id);
+        $allMateri = MateriModel::all();
 
         $breadcrumb = (object) [
-            'title' => 'Edit SMK3',
-            'list' => ['Home', 'SMK3', 'Edit']
+            'title' => 'Edit Materi',
+            'list' => ['Home', 'Materi', 'Edit']
         ];
 
         $page = (object) [
-            'title' => 'Edit SMK3'
+            'title' => 'Edit Materi'
         ];
 
-        $activeMenu = 'SMK3'; // set menu yang sedang aktif
+        $activeMenu = 'Materi'; // set menu yang sedang aktif
 
-        return view('SMK3.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'SMK3' => $SMK3, 'allSMK3' => $allSMK3, 'activeMenu' => $activeMenu]);
+        return view('Materi.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'Materi' => $Materi, 'allMateri' => $allMateri, 'activeMenu' => $activeMenu]);
     }
 
 
-    // Menyimpan perubahan data SMK3 user
+    // Menyimpan perubahan data Materi user
 
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'SMK3_kode' => 'required|string|unique:m_SMK3,SMK3_kode,' . $id . ',SMK3_id',
-            'SMK3_name' => 'required|string'
+            'Materi_kode' => 'required|string|unique:m_Materi,Materi_kode,' . $id . ',Materi_id',
+            'Materi_name' => 'required|string'
         ]);
 
-        $SMK3 = SMK3Model::findOrFail($id);
-        $SMK3->update([
+        $Materi = MateriModel::findOrFail($id);
+        $Materi->update([
 
-            'SMK3_kode' => $request->SMK3_kode,
-            'SMK3_name' => $request->SMK3_name
+            'Materi_kode' => $request->Materi_kode,
+            'Materi_name' => $request->Materi_name
         ]);
 
-        return redirect('/SMK3')->with('success', 'Data SMK3 berhasil diperbarui');
+        return redirect('/Materi')->with('success', 'Data Materi berhasil diperbarui');
     }
 
     public function create_ajax()
     {
-        return view('SMK3.create_ajax');
+        return view('Materi.create_ajax');
     }
 
     public function store_ajax(Request $request)
@@ -168,8 +168,8 @@ class SMK3Controller extends Controller
         // Cek apakah request berupa AJAX
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'SMK3_kode' => 'required|string|min:3|max:20|unique:m_SMK3,SMK3_kode',
-                'SMK3_nama' => 'required|string|max:100',
+                'Materi_kode' => 'required|string|min:3|max:20|unique:m_Materi,Materi_kode',
+                'Materi_nama' => 'required|string|max:100',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -182,10 +182,10 @@ class SMK3Controller extends Controller
                 ]);
             }
 
-            SMK3Model::create($request->all());
+            MateriModel::create($request->all());
             return response()->json([
                 'status' => true,
-                'message' => 'Data SMK3 berhasil disimpan'
+                'message' => 'Data Materi berhasil disimpan'
             ]);
         }
 
@@ -194,17 +194,17 @@ class SMK3Controller extends Controller
 
     public function edit_ajax(string $id)
     {
-        $SMK3 = SMK3Model::find($id);
+        $Materi = MateriModel::find($id);
 
-        return view('SMK3.edit_ajax', ['SMK3' => $SMK3]);
+        return view('Materi.edit_ajax', ['Materi' => $Materi]);
     }
 
     public function update_ajax(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'SMK3_kode' => 'required|string|min:3|max:20|unique:m_SMK3,SMK3_kode,' . $id . ',SMK3_id',
-                'SMK3_nama' => 'required|string|max:100',
+                'Materi_kode' => 'required|string|min:3|max:20|unique:m_Materi,Materi_kode,' . $id . ',Materi_id',
+                'Materi_nama' => 'required|string|max:100',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -217,12 +217,12 @@ class SMK3Controller extends Controller
                 ]);
             }
 
-            $check = SMK3Model::find($id);
+            $check = MateriModel::find($id);
             if ($check) {
                 $check->update($request->all());
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data SMK3 berhasil diupdate'
+                    'message' => 'Data Materi berhasil diupdate'
                 ]);
             } else {
                 return response()->json([
@@ -236,20 +236,20 @@ class SMK3Controller extends Controller
 
     public function confirm_ajax(string $id)
     {
-        $SMK3 = SMK3Model::find($id);
+        $Materi = MateriModel::find($id);
 
-        return view('SMK3.confirm_ajax', ['SMK3' => $SMK3]);
+        return view('Materi.confirm_ajax', ['Materi' => $Materi]);
     }
 
     public function delete_ajax(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
-            $SMK3 = SMK3Model::find($id);
-            if ($SMK3) {
-                $SMK3->delete();
+            $Materi = MateriModel::find($id);
+            if ($Materi) {
+                $Materi->delete();
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data SMK3 berhasil dihapus'
+                    'message' => 'Data Materi berhasil dihapus'
                 ]);
             } else {
                 return response()->json([
@@ -261,34 +261,34 @@ class SMK3Controller extends Controller
         return redirect('/');
     }
 
-    // Menghapus data SMK3 user
+    // Menghapus data Materi user
     public function destroy(string $id)
     {
-        $SMK3 = SMK3Model::find($id);
-        if (!$SMK3) { // untuk mengecek apakah data SMK3 user dengan id yang dimaksud ada atau tidak
-            return redirect('/SMK3')->with('error', 'Data SMK3 tidak ditemukan');
+        $Materi = MateriModel::find($id);
+        if (!$Materi) { // untuk mengecek apakah data Materi user dengan id yang dimaksud ada atau tidak
+            return redirect('/Materi')->with('error', 'Data Materi tidak ditemukan');
         }
 
         try {
-            SMK3Model::destroy($id); // Hapus data SMK3 user
-            return redirect('/SMK3')->with('success', 'Data user berhasil dihapus');
+            MateriModel::destroy($id); // Hapus data Materi user
+            return redirect('/Materi')->with('success', 'Data user berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
 
             // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
-            return redirect('/SMK3')->with('error', 'Data SMK3 gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
+            return redirect('/Materi')->with('error', 'Data Materi gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
     }
 
     public function import()
     {
-        return view('SMK3.import');
+        return view('Materi.import');
     }
 
     public function import_ajax(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'file_SMK3' => ['required', 'mimes:xlsx', 'max:1024']
+                'file_Materi' => ['required', 'mimes:xlsx', 'max:1024']
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -300,7 +300,7 @@ class SMK3Controller extends Controller
                 ]);
             }
 
-            $file = $request->file('file_SMK3');
+            $file = $request->file('file_Materi');
 
             $reader = IOFactory::createReader('Xlsx');
             $reader->setReadDataOnly(true);
@@ -313,20 +313,20 @@ class SMK3Controller extends Controller
                 foreach ($data as $baris => $value) {
                     if ($baris > 1) {
                         $insert[] = [
-                            'SMK3_kode' => $value['A'],
-                            'SMK3_nama' => $value['B'],
+                            'Materi_kode' => $value['A'],
+                            'Materi_nama' => $value['B'],
                             'created_at' => now(),
                         ];
                     }
                 }
 
                 if (count($insert) > 0) {
-                    SMK3Model::insertOrIgnore($insert);
+                    MateriModel::insertOrIgnore($insert);
                 }
 
                 return response()->json([
                     'status'  => true,
-                    'message' => 'Data SMK3 berhasil diimport'
+                    'message' => 'Data Materi berhasil diimport'
                 ]);
             } else {
                 return response()->json([
@@ -340,25 +340,25 @@ class SMK3Controller extends Controller
 
     public function export_excel()
     {
-        $SMK3 = SMK3Model::select('SMK3_kode', 'SMK3_nama')
-            ->orderBy('SMK3_kode')
+        $Materi = MateriModel::select('Materi_kode', 'Materi_nama')
+            ->orderBy('Materi_kode')
             ->get();
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         $sheet->setCellValue('A1', 'No');
-        $sheet->setCellValue('B1', 'Kode SMK3');
-        $sheet->setCellValue('C1', 'Nama SMK3');
+        $sheet->setCellValue('B1', 'Kode Materi');
+        $sheet->setCellValue('C1', 'Nama Materi');
 
         $sheet->getStyle('A1:C1')->getFont()->setBold(true);
 
         $no = 1;
         $baris = 2;
-        foreach ($SMK3 as $key => $value) {
+        foreach ($Materi as $key => $value) {
             $sheet->setCellValue('A' . $baris, $no);
-            $sheet->setCellValue('B' . $baris, $value->SMK3_kode);
-            $sheet->setCellValue('C' . $baris, $value->SMK3_nama);
+            $sheet->setCellValue('B' . $baris, $value->Materi_kode);
+            $sheet->setCellValue('C' . $baris, $value->Materi_nama);
             $baris++;
             $no++;
         }
@@ -367,10 +367,10 @@ class SMK3Controller extends Controller
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
-        $sheet->setTitle('Data SMK3');
+        $sheet->setTitle('Data Materi');
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $filename = 'Data SMK3 ' . date('Y-m-d H:i:s') . '.xlsx';
+        $filename = 'Data Materi ' . date('Y-m-d H:i:s') . '.xlsx';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
@@ -387,16 +387,16 @@ class SMK3Controller extends Controller
 
     public function export_pdf()
     {
-        $SMK3 = SMK3Model::select('SMK3_kode', 'SMK3_nama')
-            ->orderBy('SMK3_kode')
+        $Materi = MateriModel::select('Materi_kode', 'Materi_nama')
+            ->orderBy('Materi_kode')
             ->get();
 
         // use Barryvdh\DomPDF\Facade\Pdf;
-        $pdf = Pdf::loadView('SMK3.export_pdf', ['SMK3' => $SMK3]);
+        $pdf = Pdf::loadView('Materi.export_pdf', ['Materi' => $Materi]);
         $pdf->setPaper('a4', 'portrait');
         $pdf->setOption("isRemoteEnabled", true);
         $pdf->render();
 
-        return $pdf->stream('Data SMK3 ' . date('Y-m-d H:i:s') . '.pdf');
+        return $pdf->stream('Data Materi ' . date('Y-m-d H:i:s') . '.pdf');
     }
 }

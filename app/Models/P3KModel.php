@@ -6,7 +6,7 @@
  use Illuminate\Database\Eloquent\Model;
  use Illuminate\Database\Eloquent\Relations\BelongsTo;
  
- class PenjualanDetailModel extends Model
+ class P3KModel extends Model
  {
      use HasFactory;
  
@@ -16,11 +16,11 @@
  
      public function sales(): BelongsTo
      {
-         return $this->belongsTo(PenjualanModel::class, 'penjualan_id', 'penjualan_id');
+         return $this->belongsTo(P3KModel::class, 'penjualan_id', 'penjualan_id');
      }
  
      public function barang(): BelongsTo
      {
-         return $this->belongsTo(BarangModel::class, 'barang_id', 'barang_id');
+         return $this->belongsTo(KebijakanModel::class, 'barang_id', 'barang_id');
      }
  }

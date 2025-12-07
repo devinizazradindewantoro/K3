@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SMK3Model;
+use App\Models\P3KModel;
 use App\Models\InformasiModel;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class SMK3Controller extends Controller
+class P3KController extends Controller
 {
-    // Menampilkan halaman awal SMK3 user
+    // Menampilkan halaman awal P3K user
     public function index()
     {
         $breadcrumb = (object) [
@@ -22,145 +22,145 @@ class SMK3Controller extends Controller
         ];
 
         $page = (object) [
-            'title' => 'Daftar SMK3 user yang terdaftar dalam sistem'
+            'title' => 'Daftar P3K user yang terdaftar dalam sistem'
         ];
 
-        $activeMenu = 'SMK3'; // set menu yang sedang aktif
+        $activeMenu = 'P3K'; // set menu yang sedang aktif
 
-        return view('SMK3.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        return view('P3K.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
     }
 
-    // Ambil data SMK3 user dalam bentuk json untuk datatables public function list(Request $request)
+    // Ambil data P3K user dalam bentuk json untuk datatables public function list(Request $request)
     public function list(Request $request)
     {
-        $SMK3 = SMK3Model::select('SMK3_id', 'SMK3_kode', 'SMK3_nama');
+        $P3K = P3KModel::select('P3K_id', 'P3K_kode', 'P3K_nama');
 
-        // filter data user berdasarkan SMK3_id
-        if ($request->SMK3_id) {
-            $SMK3->where('SMK3_id', $request->SMK3_id);
+        // filter data user berdasarkan P3K_id
+        if ($request->P3K_id) {
+            $P3K->where('P3K_id', $request->P3K_id);
         };
 
 
-        return DataTables::of($SMK3)
+        return DataTables::of($P3K)
             // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
             ->addIndexColumn()
-            ->addColumn('aksi', function ($SMK3) { // menambahkan kolom aksi
-                // $btn = '<a href="'.url('/SMK3/' . $SMK3->SMK3_id).'" class="btn btn-info btn-sm">Detail</a> ';
-                // $btn .= '<a href="'.url('/SMK3/' . $SMK3->SMK3_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
-                // $btn .= '<form class="d-inline-block" method="POST" action="'. url('/SMK3/'.$SMK3->SMK3_id).'">'
+            ->addColumn('aksi', function ($P3K) { // menambahkan kolom aksi
+                // $btn = '<a href="'.url('/P3K/' . $P3K->P3K_id).'" class="btn btn-info btn-sm">Detail</a> ';
+                // $btn .= '<a href="'.url('/P3K/' . $P3K->P3K_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
+                // $btn .= '<form class="d-inline-block" method="POST" action="'. url('/P3K/'.$P3K->P3K_id).'">'
                 // . csrf_field() . method_field('DELETE') .
                 // '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
                 //  return $btn;
 
-                $btn = '<button onclick="modalAction(\'' . url('/SMK3/' . $SMK3->SMK3_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/SMK3/' . $SMK3->SMK3_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/SMK3/' . $SMK3->SMK3_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+                $btn = '<button onclick="modalAction(\'' . url('/P3K/' . $P3K->P3K_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/P3K/' . $P3K->P3K_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/P3K/' . $P3K->P3K_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
             })
             ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
             ->make(true);
     }
 
-    // Menampilkan halaman form tambah SMK3 user
+    // Menampilkan halaman form tambah P3K user
     public function create()
     {
         $breadcrumb = (object) [
-            'title' => 'Tambah SMK3 User',
-            'list' => ['Home', 'SMK3', 'Tambah']
+            'title' => 'Tambah P3K User',
+            'list' => ['Home', 'P3K', 'Tambah']
         ];
 
         $page = (object) [
-            'title' => 'Tambah SMK3 user baru'
+            'title' => 'Tambah P3K user baru'
         ];
 
-        $SMK3 = SMK3Model::all();
-        $activeMenu = 'SMK3'; // set menu yang sedang aktif
+        $P3K = P3KModel::all();
+        $activeMenu = 'P3K'; // set menu yang sedang aktif
 
-        return view('SMK3.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'SMK3' => $SMK3, 'activeMenu' => $activeMenu]);
+        return view('P3K.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'P3K' => $P3K, 'activeMenu' => $activeMenu]);
     }
 
-    // Menyimpan data SMK3 user baru
+    // Menyimpan data P3K user baru
     public function store(Request $request)
     {
         $request->validate([
-            // username harus diisi, berupa string, minimal 3 karakter, dan bernilai unik di tabel m_SMK3 kolom SMK3_kode dan SMK3_nama
-            'SMK3_kode' => 'required|string|unique:m_SMK3,SMK3_kode',
-            'SMK3_nama' => 'required|string'
+            // username harus diisi, berupa string, minimal 3 karakter, dan bernilai unik di tabel m_P3K kolom P3K_kode dan P3K_nama
+            'P3K_kode' => 'required|string|unique:m_P3K,P3K_kode',
+            'P3K_nama' => 'required|string'
         ]);
 
-        SMK3Model::create([
-            'SMK3_kode' => $request->SMK3_kode,
-            'SMK3_name' => $request->SMK3_name
+        P3KModel::create([
+            'P3K_kode' => $request->P3K_kode,
+            'P3K_name' => $request->P3K_name
         ]);
 
-        return redirect('/SMK3')->with('success', 'Data SMK3 berhasil disimpan');
+        return redirect('/P3K')->with('success', 'Data P3K berhasil disimpan');
     }
 
 
-    // Menampilkan detail SMK3 user
+    // Menampilkan detail P3K user
 
     public function show(string $id)
     {
-        $SMK3 = SMK3Model::find($id);
+        $P3K = P3KModel::find($id);
 
         $breadcrumb = (object) [
-            'title' => 'Detail SMK3',
-            'list' => ['Home', 'SMK3', 'Detail']
+            'title' => 'Detail P3K',
+            'list' => ['Home', 'P3K', 'Detail']
         ];
 
         $page = (object) [
-            'title' => 'Detail SMK3'
+            'title' => 'Detail P3K'
         ];
 
-        $activeMenu = 'SMK3'; // set menu yang sedang aktif
+        $activeMenu = 'P3K'; // set menu yang sedang aktif
 
-        return view('SMK3.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'SMK3' => $SMK3, 'activeMenu' => $activeMenu]);
+        return view('P3K.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'P3K' => $P3K, 'activeMenu' => $activeMenu]);
     }
 
-    // Menampilkan halaman form edit SMK3 user
+    // Menampilkan halaman form edit P3K user
 
     public function edit(string $id)
     {
-        $SMK3 = SMK3Model::find($id);
-        $allSMK3 = SMK3Model::all();
+        $P3K = P3KModel::find($id);
+        $allP3K = P3KModel::all();
 
         $breadcrumb = (object) [
-            'title' => 'Edit SMK3',
-            'list' => ['Home', 'SMK3', 'Edit']
+            'title' => 'Edit P3K',
+            'list' => ['Home', 'P3K', 'Edit']
         ];
 
         $page = (object) [
-            'title' => 'Edit SMK3'
+            'title' => 'Edit P3K'
         ];
 
-        $activeMenu = 'SMK3'; // set menu yang sedang aktif
+        $activeMenu = 'P3K'; // set menu yang sedang aktif
 
-        return view('SMK3.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'SMK3' => $SMK3, 'allSMK3' => $allSMK3, 'activeMenu' => $activeMenu]);
+        return view('P3K.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'P3K' => $P3K, 'allP3K' => $allP3K, 'activeMenu' => $activeMenu]);
     }
 
 
-    // Menyimpan perubahan data SMK3 user
+    // Menyimpan perubahan data P3K user
 
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'SMK3_kode' => 'required|string|unique:m_SMK3,SMK3_kode,' . $id . ',SMK3_id',
-            'SMK3_name' => 'required|string'
+            'P3K_kode' => 'required|string|unique:m_P3K,P3K_kode,' . $id . ',P3K_id',
+            'P3K_name' => 'required|string'
         ]);
 
-        $SMK3 = SMK3Model::findOrFail($id);
-        $SMK3->update([
+        $P3K = P3KModel::findOrFail($id);
+        $P3K->update([
 
-            'SMK3_kode' => $request->SMK3_kode,
-            'SMK3_name' => $request->SMK3_name
+            'P3K_kode' => $request->P3K_kode,
+            'P3K_name' => $request->P3K_name
         ]);
 
-        return redirect('/SMK3')->with('success', 'Data SMK3 berhasil diperbarui');
+        return redirect('/P3K')->with('success', 'Data P3K berhasil diperbarui');
     }
 
     public function create_ajax()
     {
-        return view('SMK3.create_ajax');
+        return view('P3K.create_ajax');
     }
 
     public function store_ajax(Request $request)
@@ -168,8 +168,8 @@ class SMK3Controller extends Controller
         // Cek apakah request berupa AJAX
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'SMK3_kode' => 'required|string|min:3|max:20|unique:m_SMK3,SMK3_kode',
-                'SMK3_nama' => 'required|string|max:100',
+                'P3K_kode' => 'required|string|min:3|max:20|unique:m_P3K,P3K_kode',
+                'P3K_nama' => 'required|string|max:100',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -182,10 +182,10 @@ class SMK3Controller extends Controller
                 ]);
             }
 
-            SMK3Model::create($request->all());
+            P3KModel::create($request->all());
             return response()->json([
                 'status' => true,
-                'message' => 'Data SMK3 berhasil disimpan'
+                'message' => 'Data P3K berhasil disimpan'
             ]);
         }
 
@@ -194,17 +194,17 @@ class SMK3Controller extends Controller
 
     public function edit_ajax(string $id)
     {
-        $SMK3 = SMK3Model::find($id);
+        $P3K = P3KModel::find($id);
 
-        return view('SMK3.edit_ajax', ['SMK3' => $SMK3]);
+        return view('P3K.edit_ajax', ['P3K' => $P3K]);
     }
 
     public function update_ajax(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'SMK3_kode' => 'required|string|min:3|max:20|unique:m_SMK3,SMK3_kode,' . $id . ',SMK3_id',
-                'SMK3_nama' => 'required|string|max:100',
+                'P3K_kode' => 'required|string|min:3|max:20|unique:m_P3K,P3K_kode,' . $id . ',P3K_id',
+                'P3K_nama' => 'required|string|max:100',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -217,12 +217,12 @@ class SMK3Controller extends Controller
                 ]);
             }
 
-            $check = SMK3Model::find($id);
+            $check = P3KModel::find($id);
             if ($check) {
                 $check->update($request->all());
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data SMK3 berhasil diupdate'
+                    'message' => 'Data P3K berhasil diupdate'
                 ]);
             } else {
                 return response()->json([
@@ -236,20 +236,20 @@ class SMK3Controller extends Controller
 
     public function confirm_ajax(string $id)
     {
-        $SMK3 = SMK3Model::find($id);
+        $P3K = P3KModel::find($id);
 
-        return view('SMK3.confirm_ajax', ['SMK3' => $SMK3]);
+        return view('P3K.confirm_ajax', ['P3K' => $P3K]);
     }
 
     public function delete_ajax(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
-            $SMK3 = SMK3Model::find($id);
-            if ($SMK3) {
-                $SMK3->delete();
+            $P3K = P3KModel::find($id);
+            if ($P3K) {
+                $P3K->delete();
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data SMK3 berhasil dihapus'
+                    'message' => 'Data P3K berhasil dihapus'
                 ]);
             } else {
                 return response()->json([
@@ -261,34 +261,34 @@ class SMK3Controller extends Controller
         return redirect('/');
     }
 
-    // Menghapus data SMK3 user
+    // Menghapus data P3K user
     public function destroy(string $id)
     {
-        $SMK3 = SMK3Model::find($id);
-        if (!$SMK3) { // untuk mengecek apakah data SMK3 user dengan id yang dimaksud ada atau tidak
-            return redirect('/SMK3')->with('error', 'Data SMK3 tidak ditemukan');
+        $P3K = P3KModel::find($id);
+        if (!$P3K) { // untuk mengecek apakah data P3K user dengan id yang dimaksud ada atau tidak
+            return redirect('/P3K')->with('error', 'Data P3K tidak ditemukan');
         }
 
         try {
-            SMK3Model::destroy($id); // Hapus data SMK3 user
-            return redirect('/SMK3')->with('success', 'Data user berhasil dihapus');
+            P3KModel::destroy($id); // Hapus data P3K user
+            return redirect('/P3K')->with('success', 'Data user berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
 
             // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
-            return redirect('/SMK3')->with('error', 'Data SMK3 gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
+            return redirect('/P3K')->with('error', 'Data P3K gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
     }
 
     public function import()
     {
-        return view('SMK3.import');
+        return view('P3K.import');
     }
 
     public function import_ajax(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'file_SMK3' => ['required', 'mimes:xlsx', 'max:1024']
+                'file_P3K' => ['required', 'mimes:xlsx', 'max:1024']
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -300,7 +300,7 @@ class SMK3Controller extends Controller
                 ]);
             }
 
-            $file = $request->file('file_SMK3');
+            $file = $request->file('file_P3K');
 
             $reader = IOFactory::createReader('Xlsx');
             $reader->setReadDataOnly(true);
@@ -313,20 +313,20 @@ class SMK3Controller extends Controller
                 foreach ($data as $baris => $value) {
                     if ($baris > 1) {
                         $insert[] = [
-                            'SMK3_kode' => $value['A'],
-                            'SMK3_nama' => $value['B'],
+                            'P3K_kode' => $value['A'],
+                            'P3K_nama' => $value['B'],
                             'created_at' => now(),
                         ];
                     }
                 }
 
                 if (count($insert) > 0) {
-                    SMK3Model::insertOrIgnore($insert);
+                    P3KModel::insertOrIgnore($insert);
                 }
 
                 return response()->json([
                     'status'  => true,
-                    'message' => 'Data SMK3 berhasil diimport'
+                    'message' => 'Data P3K berhasil diimport'
                 ]);
             } else {
                 return response()->json([
@@ -340,25 +340,25 @@ class SMK3Controller extends Controller
 
     public function export_excel()
     {
-        $SMK3 = SMK3Model::select('SMK3_kode', 'SMK3_nama')
-            ->orderBy('SMK3_kode')
+        $P3K = P3KModel::select('P3K_kode', 'P3K_nama')
+            ->orderBy('P3K_kode')
             ->get();
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         $sheet->setCellValue('A1', 'No');
-        $sheet->setCellValue('B1', 'Kode SMK3');
-        $sheet->setCellValue('C1', 'Nama SMK3');
+        $sheet->setCellValue('B1', 'Kode P3K');
+        $sheet->setCellValue('C1', 'Nama P3K');
 
         $sheet->getStyle('A1:C1')->getFont()->setBold(true);
 
         $no = 1;
         $baris = 2;
-        foreach ($SMK3 as $key => $value) {
+        foreach ($P3K as $key => $value) {
             $sheet->setCellValue('A' . $baris, $no);
-            $sheet->setCellValue('B' . $baris, $value->SMK3_kode);
-            $sheet->setCellValue('C' . $baris, $value->SMK3_nama);
+            $sheet->setCellValue('B' . $baris, $value->P3K_kode);
+            $sheet->setCellValue('C' . $baris, $value->P3K_nama);
             $baris++;
             $no++;
         }
@@ -367,10 +367,10 @@ class SMK3Controller extends Controller
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
-        $sheet->setTitle('Data SMK3');
+        $sheet->setTitle('Data P3K');
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $filename = 'Data SMK3 ' . date('Y-m-d H:i:s') . '.xlsx';
+        $filename = 'Data P3K ' . date('Y-m-d H:i:s') . '.xlsx';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
@@ -387,16 +387,16 @@ class SMK3Controller extends Controller
 
     public function export_pdf()
     {
-        $SMK3 = SMK3Model::select('SMK3_kode', 'SMK3_nama')
-            ->orderBy('SMK3_kode')
+        $P3K = P3KModel::select('P3K_kode', 'P3K_nama')
+            ->orderBy('P3K_kode')
             ->get();
 
         // use Barryvdh\DomPDF\Facade\Pdf;
-        $pdf = Pdf::loadView('SMK3.export_pdf', ['SMK3' => $SMK3]);
+        $pdf = Pdf::loadView('P3K.export_pdf', ['P3K' => $P3K]);
         $pdf->setPaper('a4', 'portrait');
         $pdf->setOption("isRemoteEnabled", true);
         $pdf->render();
 
-        return $pdf->stream('Data SMK3 ' . date('Y-m-d H:i:s') . '.pdf');
+        return $pdf->stream('Data P3K ' . date('Y-m-d H:i:s') . '.pdf');
     }
 }

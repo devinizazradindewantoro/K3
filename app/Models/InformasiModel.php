@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Foundation\Auth\User as Authenticatable; // implementasi class Authenticatable
+use Illuminate\Foundation\Auth\Informasi as Authenticatable; // implementasi class Authenticatable
 use Illuminate\Database\Eloquent\Model;
 
-class UserModel extends Authenticatable
+class InformasiModel
 {
     use HasFactory;
 
-    protected $table = 'm_user';       // Mendefinisikan nama tabel yang digunakan oleh model ini
-    protected $primaryKey = 'user_id'; // Mendefinisikan primary key dari tabel yang digunakan
-    protected $fillable = ['level_id', 'username', 'nama', 'password', 'photo_profile'];
+    protected $table = 'm_Informasi';       // Mendefinisikan nama tabel yang digunakan oleh model ini
+    protected $primaryKey = 'Informasi_id'; // Mendefinisikan primary key dari tabel yang digunakan
+    protected $fillable = ['level_id', 'Informasiname', 'nama', 'password', 'photo_profile'];
 
     protected $hidden = ['password']; // jangan di tampilkan saat select
 
@@ -37,7 +37,7 @@ class UserModel extends Authenticatable
     }
 
     /**
-    * Cek apakah user memiliki role tertentu
+    * Cek apakah Informasi memiliki role tertentu
     */
     public function hasRole($role): bool
     {
