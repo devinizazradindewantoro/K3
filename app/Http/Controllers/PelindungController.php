@@ -20,14 +20,72 @@ class PelindungController extends Controller
             'list' => [''],
             'image' => 'img/background.avif'
         ];
-
         $page = (object) [
             'title' => 'Daftar Pelindung user yang terdaftar dalam sistem'
         ];
+        $activeMenu = 'Pelindung';
+        $tabData = $this->getTabData();
 
-        $activeMenu = 'Pelindung'; // set menu yang sedang aktif
-
-        return view('Pelindung.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        return view('Pelindung.index', [
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'activeMenu' => $activeMenu,
+            'tabData' => $tabData
+        ]);
+    }
+    public function getTabData()
+    {
+        return [
+            1 => [
+                'title' => 'Prinsip Umum',
+                'content' => [
+                    'APD harus sesuai dengan jenis bahaya dan kondisi kerja.',
+                    'APD harus dipakai, dirawat, dan disimpan dengan benar.',
+                    'Penggunaan APD wajib dan diawasi oleh pengawas lapangan.'
+                ],
+                'image' => 'adminlte/dist/img/apd/prinsip-umum.png'
+            ],
+            2 => [
+                'title' => 'Jenis APD yang Digunakan',
+                'content' => [
+                    'Helm pelindung kepala untuk kerja lapangan dan area produksi.',
+                    'Kacamata pelindung untuk perlindungan mata dari partikel terbang dan percikan.',
+                    'Pelindung pendengaran (earplug/earmuff) di area berisik.',
+                    'Masker respirator untuk paparan debu, asap atau uap kimia tertentu.',
+                    'Sepatu keselamatan (safety shoes) dengan toe cap.',
+                    'Sarung tangan sesuai kebutuhan tugas (antivibration, chemical-resistant, cut-resistant, dsb.).',
+                    'Pakaian pelindung (coverall, apron) untuk area yang memerlukan proteksi dari bahan kimia atau kotoran.'
+                ],
+                'image' => 'adminlte/dist/img/apd/jenis-apd.png'
+            ],
+            3 => [
+                'title' => 'Tanggung Jawab',
+                'content' => [
+                    'Manajemen: Menyediakan APD yang sesuai dan memastikan kebijakan pemakaian.',
+                    'Pengawas: Menegakkan pemakaian APD dan melakukan inspeksi berkala.',
+                    'Pekerja: Menggunakan APD sesuai aturan dan melaporkan kerusakan APD.'
+                ],
+                'image' => 'adminlte/dist/img/apd/tanggung-jawab.png'
+            ],
+            4 => [
+                'title' => 'Pelatihan dan Pengawasan',
+                'content' => [
+                    'Pekerja wajib mengikuti pelatihan penggunaan dan perawatan APD.',
+                    'Pengawasan rutin dilakukan untuk memastikan kepatuhan.',
+                    'Evaluasi berkala terhadap efektivitas program APD.'
+                ],
+                'image' => 'adminlte/dist/img/apd/pelatihan.png'
+            ],
+            5 => [
+                'title' => 'Penggantian dan Perawatan',
+                'content' => [
+                    'APD yang rusak atau tidak layak pakai harus segera diganti.',
+                    'Perlengkapan harus dibersihkan dan disimpan sesuai instruksi pabrik.',
+                    'Inspeksi berkala untuk memastikan kondisi APD tetap optimal.'
+                ],
+                'image' => 'adminlte/dist/img/apd/perawatan.png'
+            ]
+        ];
     }
 
     // Ambil data Pelindung user dalam bentuk json untuk datatables public function list(Request $request)
