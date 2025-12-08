@@ -16,28 +16,47 @@ class AuditController extends Controller
     // Menampilkan halaman awal Audit user
     public function index(Request $request)
     {
-        // ================= BREADCRUMB (BIAR LAYOUT AMAN) =================
         $breadcrumb = (object) [
             'title' => '',
-            'list' => [],
+            'list'  => [],
             'image' => 'img/background.avif'
         ];
 
         $page = (object) [
-            'title' => 'Daftar Audit user yang terdaftar dalam sistem'
+            'title' => 'Checklist Penerapan SMK3 – PT HM Sampoerna Tbk'
         ];
 
         $activeMenu = 'Audit';
 
-        // ================= DATA AUDIT =================
-        $data = [
-            ['no' => '1.1.1', 'kriteria' => 'Terdapat kebijakan K3 yang tertulis, bertanggal, ditandatangani oleh pengusaha atau pengurus, serta menyatakan tujuan, sasaran, dan komitmen peningkatan K3', 'acuan' => 'PP 50/2012 – Sistem Manajemen K3'],
-            ['no' => '1.1.2', 'kriteria' => 'Kebijakan K3 disusun oleh pengusaha dan/atau pengurus melalui proses konsultasi dengan wakil tenaga kerja', 'acuan' => 'PP 50/2012'],
-            ['no' => '1.1.3', 'kriteria' => 'Perusahaan mengkomunikasikan kebijakan K3 kepada seluruh tenaga kerja, tamu, kontraktor, pelanggan, dan pemasok dengan tata cara yang tepat', 'acuan' => 'UU 1/1970 K3'],
+        // ================= DATA KRITERIA AUDIT (SESUAI ARRAY ASLI) =================
+        $rawData = [
+            [
+                'no' => '1.1.1',
+                'kriteria' => 'Terdapat kebijakan K3 yang tertulis, bertanggal, ditandatangani oleh pengusaha atau pengurus, serta menyatakan tujuan, sasaran, dan komitmen peningkatan K3',
+                'acuan' => 'PP 50/2012 – Sistem Manajemen K3',
+                'link'  => 'https://www.kemhan.go.id/itjen/wp-content/uploads/migrasi/peraturan/NOMOR%2050%20TAHUN%202012.pdf'
+            ],
+            [
+                'no' => '1.1.2',
+                'kriteria' => 'Kebijakan K3 disusun oleh pengusaha dan/atau pengurus melalui proses konsultasi dengan wakil tenaga kerja',
+                'acuan' => 'PP 50/2012',
+                'link'  => 'https://www.kemhan.go.id/itjen/wp-content/uploads/migrasi/peraturan/NOMOR%2050%20TAHUN%202012.pdf'
+            ],
+            [
+                'no' => '1.1.3',
+                'kriteria' => 'Perusahaan mengkomunikasikan kebijakan K3 kepada seluruh tenaga kerja, tamu, kontraktor, pelanggan, dan pemasok dengan tata cara yang tepat',
+                'acuan' => 'UU 1/1970 K3',
+                'link'  => 'https://jdih.esdm.go.id/common/dokumen-external/uu-01-1970.pdf'
+            ],
             ['no' => '1.1.4', 'kriteria' => 'Kebijakan khusus dibuat untuk masalah K3 yang bersifat khusus', 'acuan' => ''],
             ['no' => '1.1.5', 'kriteria' => 'Kebijakan K3 dan kebijakan khusus ditinjau ulang secara berkala sesuai perubahan perusahaan dan peraturan perundang-undangan', 'acuan' => ''],
 
-            ['no' => '1.2.1', 'kriteria' => 'Tanggung jawab dan wewenang untuk mengambil tindakan dan melaporkan K3 telah ditetapkan dan dikomunikasikan', 'acuan' => 'PP 50/2012'],
+            [
+                'no'       => '1.2.1',
+                'kriteria' => 'Tanggung jawab dan wewenang untuk mengambil tindakan dan melaporkan K3 telah ditetapkan dan dikomunikasikan',
+                'acuan'    => 'PP 50/2012 – Sistem Manajemen K3',
+                'link'     => 'https://www.kemhan.go.id/itjen/wp-content/uploads/migrasi/peraturan/NOMOR%2050%20TAHUN%202012.pdf'
+            ],
             ['no' => '1.2.2', 'kriteria' => 'Penunjukan penanggung jawab K3 sesuai dengan peraturan perundang-undangan', 'acuan' => ''],
             ['no' => '1.2.3', 'kriteria' => 'Pimpinan unit kerja bertanggung jawab atas kinerja K3 pada unit kerjanya', 'acuan' => ''],
             ['no' => '1.2.4', 'kriteria' => 'Pengusaha atau pengurus bertanggung jawab penuh atas pelaksanaan SMK3', 'acuan' => ''],
@@ -51,7 +70,12 @@ class AuditController extends Controller
 
             ['no' => '1.4.1', 'kriteria' => 'Keterlibatan dan jadwal konsultasi tenaga kerja dengan wakil perusahaan didokumentasikan dan disosialisasikan', 'acuan' => ''],
             ['no' => '1.4.2', 'kriteria' => 'Terdapat prosedur untuk konsultasi terkait perubahan yang berdampak pada K3', 'acuan' => ''],
-            ['no' => '1.4.3', 'kriteria' => 'Perusahaan membentuk P2K3 sesuai peraturan perundang-undangan', 'acuan' => 'Permenaker 04/1987 – P2K3'],
+            [
+                'no' => '1.4.3',
+                'kriteria' => 'Perusahaan membentuk P2K3 sesuai peraturan perundang-undangan',
+                'acuan' => 'Permenaker 04/1987 – P2K3',
+                'link'  => 'https://jdih.kemnaker.go.id/asset/data_puu/1987PERMENAKER04.pdf'
+            ],
             ['no' => '1.4.4', 'kriteria' => 'Ketua P2K3 adalah pimpinan puncak atau pengurus', 'acuan' => ''],
             ['no' => '1.4.5', 'kriteria' => 'Sekretaris P2K3 adalah Ahli K3 sesuai peraturan perundang-undangan', 'acuan' => ''],
             ['no' => '1.4.6', 'kriteria' => 'Kegiatan P2K3 berfokus pada pengembangan kebijakan dan prosedur pengendalian risiko', 'acuan' => ''],
@@ -232,64 +256,64 @@ class AuditController extends Controller
 
         ];
 
-        // ================= PAGINATION =================
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $perPage = 10;
+        $filtered = array_filter($rawData, function ($item) {
+            return !empty(trim($item['acuan']));
+        });
 
-        $currentItems = array_slice(
-            $data,
-            ($currentPage - 1) * $perPage,
-            $perPage
-        );
+        // Re-index agar pagination aman
+        $data = array_values($filtered);
+
+        // ================= PAGINATION + NOMOR ASLI =================
+        $perPage     = 15;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage() ?: 1;
+
+        $currentItems = array_slice($data, ($currentPage - 1) * $perPage, $perPage);
+
+        // Tambahkan kolom 'urut' yang berisi nomor asli (1.1.1, 1.1.2, dst)
+        foreach ($currentItems as $index => &$item) {
+            $originalIndex = ($currentPage - 1) * $perPage + $index;
+            $item['urut'] = $data[$originalIndex]['no']; // nomor asli dari array
+        }
+        unset($item);
+        foreach ($currentItems as $index => &$item) {
+            $originalIndex = ($currentPage - 1) * $perPage + $index;
+            $item['urut'] = $data[$originalIndex]['no'];
+            $item['link'] = $data[$originalIndex]['link'] ?? '#'; // default jika tidak ada link
+        }
+        unset($item);
 
         $paginatedData = new LengthAwarePaginator(
             $currentItems,
             count($data),
             $perPage,
             $currentPage,
-            ['path' => $request->url()]
+            [
+                'path'  => $request->url(),
+                'query' => $request->query(),
+            ]
         );
 
-        // ================= RETURN VIEW =================
-        return view('Audit.index', compact(
-            'breadcrumb',
-            'page',
-            'activeMenu',
-            'paginatedData'
-        ));
+        return view('Audit.index', compact('breadcrumb', 'page', 'activeMenu', 'paginatedData'));
     }
-
-    // Ambil data Audit user dalam bentuk json untuk datatables public function list(Request $request)
     public function list(Request $request)
     {
         $Audit = AuditModel::select('Audit_id', 'Audit_kode', 'Audit_nama');
 
-        // filter data user berdasarkan Audit_id
         if ($request->Audit_id) {
             $Audit->where('Audit_id', $request->Audit_id);
-        };
-
+        }
 
         return DataTables::of($Audit)
-            // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
             ->addIndexColumn()
-            ->addColumn('aksi', function ($Audit) { // menambahkan kolom aksi
-                // $btn = '<a href="'.url('/Audit/' . $Audit->Audit_id).'" class="btn btn-info btn-sm">Detail</a> ';
-                // $btn .= '<a href="'.url('/Audit/' . $Audit->Audit_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
-                // $btn .= '<form class="d-inline-block" method="POST" action="'. url('/Audit/'.$Audit->Audit_id).'">'
-                // . csrf_field() . method_field('DELETE') .
-                // '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
-                //  return $btn;
-
-                $btn = '<button onclick="modalAction(\'' . url('/Audit/' . $Audit->Audit_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+            ->addColumn('aksi', function ($Audit) {
+                $btn  = '<button onclick="modalAction(\'' . url('/Audit/' . $Audit->Audit_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/Audit/' . $Audit->Audit_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/Audit/' . $Audit->Audit_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
             })
-            ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
+            ->rawColumns(['aksi'])
             ->make(true);
     }
-
     // Menampilkan halaman form tambah Audit user
     public function create()
     {
