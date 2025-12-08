@@ -1,7 +1,7 @@
 <section class="content-header">
     @php
-    $breadcrumb = $breadcrumb ?? [];
-@endphp
+        $breadcrumb = $breadcrumb ?? [];
+    @endphp
 
     <div class="container-fluid">
         <div class="row mb-2">
@@ -11,11 +11,11 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     @foreach ($breadcrumb->list as $key => $value)
-                    @if ($key == count($breadcrumb->list) - 1)
-                    <li class="breadcrumb-item active">{{ $value }}</li>
-                    @else
-                    <li class="breadcrumb-item">{{ $value }}</li>
-                    @endif
+                        @if ($key == count($breadcrumb->list) - 1)
+                            <li class="breadcrumb-item active">{{ $value }}</li>
+                        @else
+                            <li class="breadcrumb-item">{{ $value }}</li>
+                        @endif
                     @endforeach
                 </ol>
             </div>
