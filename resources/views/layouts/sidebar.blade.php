@@ -88,19 +88,20 @@
 
         <!-- SMK 3 -->
         <li class="nav-item">
-          <a href="{{ url('/smk3') }}" class="nav-link {{ ($activeMenu == 'smk3')? 'active' : '' }}">
-            <i class="nav-icon fas fa-book-open"></i>
+          <a href="{{ url('/smk3') }}" class="nav-link {{ ($activeMenu == 'smk3') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-hard-hat"></i>
             <p>SMK 3</p>
           </a>
         </li>
 
         <!-- AUDIT K3 -->
         <li class="nav-item">
-          <a href="{{ url('/audit') }}" class="nav-link {{ ($activeMenu == 'audit')? 'active' : '' }}">
-            <i class="nav-icon fas fa-book-open"></i>
+          <a href="{{ url('/audit') }}" class="nav-link {{ ($activeMenu == 'audit') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-clipboard-check"></i>
             <p>AUDIT K3</p>
           </a>
         </li>
+
 
       </ul>
     </nav>
