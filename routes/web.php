@@ -11,6 +11,7 @@ use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DetailP3KController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\ManajemenController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\SMK3Controller;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,9 @@ Route::get('/smk3', [SMK3Controller::class, 'index']);
 
 // Audit K3
 Route::get('/audit', [AuditController::class, 'index']);
+
+// Audit K3
+Route::get('/manajemen', [ManajemenController::class, 'index']);
 
 
 /*

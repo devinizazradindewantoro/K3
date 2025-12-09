@@ -81,8 +81,8 @@
         <!-- Materi K3 -->
         <li class="nav-item">
           <a href="{{ url('/materi') }}" class="nav-link {{ ($activeMenu == 'materi')? 'active' : '' }}">
-            <i class="nav-icon fas fa-book-open"></i>
-            <p>Materi K3</p>
+            <i class="nav-icon fas fa-chart-line"></i>
+            <p>Manajemen Risiko</p>
           </a>
         </li>
 
@@ -102,6 +102,7 @@
           </a>
         </li>
 
+     
 
       </ul>
     </nav>
